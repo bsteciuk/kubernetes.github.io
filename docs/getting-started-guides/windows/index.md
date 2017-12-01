@@ -77,7 +77,7 @@ To run Windows Server Containers on Kubernetes, you'll need to set up both your 
 4. Create HNS Network
 5. Ensure correct CNI network config
 5. Start kubelet.exe using this script [start-kubelet.ps1](https://github.com/Microsoft/SDN/blob/master/Kubernetes/windows/start-kubelet.ps1)
-6. Start kube-proxy using this script[start-kubeproxy.ps1](https://github.com/Microsoft/SDN/blob/master/Kubernetes/windows/start-kubeproxy.ps1)
+6. Start kube-proxy using this script [start-kubeproxy.ps1](https://github.com/Microsoft/SDN/blob/master/Kubernetes/windows/start-kubeproxy.ps1)
 7. [Optional] Add static routes on Windows host
 
 **Windows CNI Config Example**
@@ -174,11 +174,10 @@ Because your cluster has both Linux and Windows nodes, you must explicitly set t
 }
 ```
 
-## Supported Features and Limitations
+## Supported Features
 
 ### Secrets and ConfigMaps
-Secrets and ConfigMaps can be utilized in Windows Server Containers, but must be used as environment variables.  
-Limitation: Using Secrets and ConfigMaps as volume mounts is not supported in Windows Server Containers at this time.
+Secrets and ConfigMaps can be utilized in Windows Server Containers, but must be used as environment variables. See limitations section below for additional details.
 
 **Examples:**
 
@@ -255,7 +254,7 @@ spec:
 ```
  
 ### Volumes
-Some supported Volume Mounts are local, emptyDir, hostPath.  One thing to remember is paths must either be escaped, or use forward slashes, for example `mountPath: "C:\\etc\\foo"` or `mountPath: "C:/etc/foo"`.
+Some supported Volume Mounts are local, emptyDir, hostPath.  One thing to remember is that paths must either be escaped, or use forward slashes, for example `mountPath: "C:\\etc\\foo"` or `mountPath: "C:/etc/foo"`.
 
 Persistent Volume Claims are supported for supported volume types.
 
@@ -312,3 +311,9 @@ Persistent Volume Claims are supported for supported volume types.
 
 Windows Stats use a hybrid model: pod and container level stats come from CRI (via dockershim), while node level stats come from the "winstats" package that exports cadvisor like datastructures using windows specific perf counters from the node.
 
+## Known Limitations for Windows Server Containers with v1.9
+Some of these limitations will be addressed by the community in future releases of Kubernetes
+- Using Secrets and ConfigMaps as volume mounts is not supported 
+- The StatefulSet functionality for stateful applications is not supported
+- Horizontal Pod Autoscaling for Windows Server Container pods has not been verified to work end-to-end
+- Hyper-V Containers are not supported
