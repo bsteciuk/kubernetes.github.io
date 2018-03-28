@@ -170,7 +170,7 @@ Installing OVS can be done either via the GUI dialogs or unattended. Adding a Wi
 
 For an unattended installation please use the following command:
 ```
-cmd /c 'msiexec /i openvswitch.msi ADDLOCAL="OpenvSwitchCLI,OpenvSwitchDriver,OVNHost" /qn'
+cmd /c 'msiexec /i openvswitch-hyperv-2.7.0-certified.msi ADDLOCAL="OpenvSwitchCLI,OpenvSwitchDriver,OVNHost" /qn'
 ```
 
 The installer propagates new environment variables. Please open a new command shell or logoff/logon to ensure the environment variables are refreshed. Make sure that the environment variables are refreshed by running the following command, and verifying the version is returned:
